@@ -87,16 +87,11 @@ class plgHikashoppaymentBillplz extends hikashopPaymentPlugin {
             $this->app->enqueueMessage('You have to configure a Collection ID for the Billplz plugin payment first : check your plugin\'s parameters, on your website backend', 'error');
             return false;
         }
-        //elseif (empty($this->payment_params->payment_url))
-        //{
-        //	$this->app->enqueueMessage('You have to configure a payment url for the Example plugin payment first : check your plugin\'s parameters, on your website backend', 'error');
-        //	return false;
-        //}
+
         else {
             // Here, all the required parameters are valid, so we can proceed to the payment platform
             // The order's amount, here in cents and rounded with 2 decimals because of the payment platform's requirements
             // There is a lot of information in the $order variable, such as price with/without taxes, customer info, products... you can do a var_dump here if you need to display all the available information
-            // Wan Code start here.. hehe
 
             $address = $this->app->getUserState(HIKASHOP_COMPONENT . '.billing_address');
 
@@ -104,7 +99,6 @@ class plgHikashoppaymentBillplz extends hikashopPaymentPlugin {
 
             if (!empty($address)) {
                 $amout = round($order->cart->full_total->prices[0]->price_value_with_tax, 2);
-                //$this->pluginConfig['notify_url'][2] = HIKASHOP_LIVE . 'index.php?option=com_hikashop&ctrl=checkout&task=notify&notif_payment=' . $this->name . '&tmpl=component&lang=' . $this->locale . $this->url_itemid;
                 $notify_url = HIKASHOP_LIVE . 'index.php?option=com_hikashop&ctrl=checkout&task=notify&notif_payment=billplz&tmpl=component&lang=' . $this->locale . $this->url_itemid . '&orderid=' . $order->order_id;
                 $return_url = HIKASHOP_LIVE . 'index.php?option=com_hikashop&ctrl=checkout&task=after_end&orderid=' . $order->order_id;
                 $vars = array(
@@ -123,28 +117,6 @@ class plgHikashoppaymentBillplz extends hikashopPaymentPlugin {
                     'return_url' => $notify_url
                 );
             }
-
-            // Wan Code end here.. hehe
-            // This array contains all the required parameters by the payment plateform
-            // Not all the payment platforms will need all these parameters and they will probably have a different name.
-            // You need to look at the payment gateway integration guide provided by the payment gateway in order to know what is needed here
-            //$vars = array(
-            // User's identifier on the payment platform
-            //'IDENTIFIER' => $this->payment_params->identifier,
-            //The id of the customer
-            //'CLIENTIDENT' => $order->order_user_id,
-            // Order's description
-            //'DESCRIPTION' => "order number : ".$order->order_number,
-            // The id of the order which will be given back by the payment gateway when it will notify your plugin that the payment has been done and which will allow you to know the order corresponding to the payment in order to confirm it
-            //'ORDERID' => $order->order_id,
-            // The platform's API version, needed by the payment platform
-            //'VERSION' => 2.0,
-            // The amount of the order
-            //'AMOUNT' => $amout
-            //);
-            // To certifiate the values integrity, payment platform use to ask a hash
-            // This hash is generated according to the platform requirements
-            //$vars['HASH'] = $this->example_signature($this->payment_params->password, $vars);
 
             $this->vars = $vars;
 
@@ -211,11 +183,20 @@ class plgHikashoppaymentBillplz extends hikashopPaymentPlugin {
             $return_url = HIKASHOP_LIVE . 'index.php?option=com_hikashop&ctrl=checkout&task=after_end&order_id=' . $order_id . $this->url_itemid;
             $cancel_url = HIKASHOP_LIVE . 'index.php?option=com_hikashop&ctrl=order&task=cancel_order&order_id=' . $order_id . $this->url_itemid;
             if ($data['paid']) {
+                if ($this->payment_params->billplznotification == "Return") {
+                    // Save to DB only 1 times. 
+                    if ($dbOrder->order_status != $this->payment_params->verified_status) {
+                        $this->modifyOrder($order_id, $this->payment_params->verified_status, true, true);
+                    }
+                }
                 $this->app->redirect($return_url);
             } else {
+                if ($this->payment_params->billplznotification == "Return") {
+                    $this->modifyOrder($order_id, $this->payment_params->invalid_status, true, true);
+                }
                 $this->app->redirect($cancel_url);
             }
-        } elseif (isset($vars['id'])) {
+        } elseif (isset($vars['id']) && $this->payment_params->billplznotification == "Callback") {
             $data = $billplz->check_bill($this->payment_params->billplzapikey, $vars['id'], $this->payment_params->mode);
             // The load the parameters of the plugin in $this->payment_params and the order data based on the order_id coming from the payment platform
             if ($order_id != $data['reference_1']) {
