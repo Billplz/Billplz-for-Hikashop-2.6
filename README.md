@@ -20,11 +20,11 @@ Integrate Billplz in Hikashop 2.6
   
 # Specific Configuration
 
-  * API Secret Key : Get the API Key at Billplz Setting Page
-  * Collection ID : Get the Collection ID at Billplz Billing Page
+  * **API Secret Key** : Get the API Key at Billplz Setting Page
+  * **Collection ID** : Get the Collection ID at Billplz Billing Page
   * Enable Email & SMS Notification : Yes to send notification to customer on Bills Creation. (**Default=No**)
-  * Verification Type : **Not Supported Yet** If you having problem with Payment Status not updated after payment, choose **Return**. (**Default=Callback**)
-  * Allow payment notifications from billplz : **Yes (Mandatory)**
+  * Verification Type : If you having problem with Payment Status not updated after payment, choose **Return**. (**Default=Callback**)
+  * **Allow payment notifications from billplz** : **Yes (Mandatory)**
   * Mode : Only change to staging if you are register Billplz account at billplz-staging.herokuapp.com. Otherwise, leave it as Production
   * Debug : No
   * Invalid status : Cancelled
@@ -32,7 +32,7 @@ Integrate Billplz in Hikashop 2.6
   
 # Custom Image
 
-  * Upload logo-billplz.png file to **/media/com_hikashop/images/payment/**
+  * Upload **logo-billplz.png** file to **/media/com_hikashop/images/payment/**
   * Set it at Generic Configuration
   
 # Donation
