@@ -250,13 +250,16 @@ class plgHikashoppaymentBillplz extends hikashopPaymentPlugin {
             }
             //If everything's OK, the payment has been done. Order is validated -> success
             elseif ($data['paid']) {
+
+                // Save to DB only 1 times. 
+                if ($dbOrder->order_status == $this->payment_params->verified_status)
+                    return true;
                 $this->modifyOrder($order_id, $this->payment_params->verified_status, true, true);
 
                 // $this->app->redirect($return_url);
                 return true;
             }
         } else {
-            echo 'gila';
             return false;
         }
     }
