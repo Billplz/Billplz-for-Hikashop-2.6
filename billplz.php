@@ -6,6 +6,9 @@
  * @author wanzul-hosting.com
  */
 
+//Prevent from direct access
+defined('_JEXEC') or die('Restricted access');
+
 // You need to extend from the hikashopPaymentPlugin class which already define lots of functions in order to simplify your work
 class plgHikashoppaymentBillplz extends hikashopPaymentPlugin {
 
