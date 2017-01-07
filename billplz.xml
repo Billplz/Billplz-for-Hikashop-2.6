@@ -14,12 +14,12 @@
 		<filename>billplz_end.php</filename>
 	</files>
 	<params addpath="/components/com_hikashop/params">
-		<param name="pluginoptions" type="pluginoptions" default="plugin" label="hikashop" description="HikaShop Billplz options" />
+		<param name="pluginoptions" type="pluginoptions" default="plugin" label="hikashop" description="HikaShop options" />
 	</params>
 	<config>
 		<fields name="params" addfieldpath="/components/com_hikashop/fields">
 			<fieldset name="basic">
-				<field id="pluginoptions" name="pluginoptions" type="pluginoptions" label="hikashop" description="HikaShop Billplz options" />
+				<field id="pluginoptions" name="pluginoptions" type="pluginoptions" label="hikashop" description="HikaShop options" />
 			</fieldset>
 		</fields>
 	</config>
