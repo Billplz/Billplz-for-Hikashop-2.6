@@ -12,6 +12,8 @@
 	<files>
 		<filename plugin="billplz">billplz.php</filename>
 		<filename>billplz_end.php</filename>
+		<filename>billplzapi.php</filename>
+		<filename>logo-billplz.png</filename>
 	</files>
 	<params addpath="/components/com_hikashop/params">
 		<param name="pluginoptions" type="pluginoptions" default="plugin" label="hikashop" description="HikaShop options" />
