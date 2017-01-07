@@ -1,3 +1,7 @@
+<?php
+//Prevent from direct access
+defined('_JEXEC') or die('Restricted access');
+?>
 <!-- Here is the ending page, called at the end of the checkout, just before the user is redirected to the payment platform -->
 <div class="hikashop_billplz_end" id="hikashop_billplz_end">
   <!-- Waiting message -->
