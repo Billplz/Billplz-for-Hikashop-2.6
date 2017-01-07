@@ -20,6 +20,8 @@
  *  $obj->create_bill('apikey', 'Production');
  *  $obj->getURL();
  */
+//Prevent from direct access
+defined('_JEXEC') or die('Restricted access');
 
 class billplz {
 
