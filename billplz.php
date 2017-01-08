@@ -41,6 +41,9 @@ class plgHikashoppaymentBillplz extends hikashopPaymentPlugin {
                 'Production' => 'Production',
                 'Staging' => 'Staging'
             )),
+        //Custom Redirect Path
+        'successurl' => array("Success return url", 'input'),
+        'cancelurl' => array("Cancel return url", 'input'),
         // Write some things on the debug file
         'debug' => array('DEBUG', 'boolean', '0'),
         // The URL where the user is redirected after a fail during the payment process
@@ -89,9 +92,7 @@ class plgHikashoppaymentBillplz extends hikashopPaymentPlugin {
         } elseif (empty($this->payment_params->billplzcollectionid)) {
             $this->app->enqueueMessage('You have to configure a Collection ID for the Billplz plugin payment first : check your plugin\'s parameters, on your website backend', 'error');
             return false;
-        }
-
-        else {
+        } else {
             // Here, all the required parameters are valid, so we can proceed to the payment platform
             // The order's amount, here in cents and rounded with 2 decimals because of the payment platform's requirements
             // There is a lot of information in the $order variable, such as price with/without taxes, customer info, products... you can do a var_dump here if you need to display all the available information
@@ -192,10 +193,21 @@ class plgHikashoppaymentBillplz extends hikashopPaymentPlugin {
                         $this->modifyOrder($order_id, $this->payment_params->verified_status, true, true);
                     }
                 }
+
+                //If user set custom redirect path
+                if (!empty($this->payment_params->successurl)) {
+                    $return_url = $this->payment_params->successurl;
+                }
                 $this->app->redirect($return_url);
             } else {
                 if ($this->payment_params->billplznotification == "Return") {
                     $this->modifyOrder($order_id, $this->payment_params->invalid_status, true, true);
+                }
+
+                //If user set custom redirect path
+
+                if (!empty($this->payment_params->cancelurl)) {
+                    $cancel_url = $this->payment_params->cancelurl;
                 }
                 $this->app->redirect($cancel_url);
             }
