@@ -1,6 +1,6 @@
 <?php
 
-//It is fully same with Billplz for WooCommerce and Billplz for Minisite 
+//It is fully same with Billplz for WooCommerce and Billplz for Minisite
 //Different name only
 
 /*
@@ -20,7 +20,7 @@
  *  $obj->create_bill('apikey', 'Production');
  *  $obj->getURL();
  */
-//Prevent from direct access
+//Prevent from direct access		
 defined('_JEXEC') or die('Restricted access');
 
 class billplz {
@@ -126,19 +126,29 @@ class billplz {
         $this->array['callback_url'] = $callback_url;
         return $this;
     }
-    
-    public function setReference_1_Label($label){
+
+    public function setReference_1_Label($label) {
         $this->array['reference_1_label'] = $label;
         return $this;
     }
 
+    public function setReference_2_Label($label) {
+        $this->array['reference_2_label'] = $label;
+        return $this;
+    }
+
+    public function setReference_2($reference_2) {
+        $this->array['reference_2'] = $reference_2;
+        return $this;
+    }
+
     public function create_bill($api_key, $mode) {
-        
+
         $this->obj->setAPI($api_key);
         $this->obj->setAction('CREATE');
         $this->obj->setURL($mode);
         $data = $this->obj->curl_action($this->array);
-        
+
         if (isset($data['error'])) {
             unset($this->array['mobile']);
             $data = $this->obj->curl_action($this->array);
@@ -204,11 +214,11 @@ class curlaction {
             $this->url = self::$production;
         }
         if ($this->action == 'DELETE' || $this->action == 'CHECK') {
-            $this->url.='bills/' . $id;
+            $this->url .= 'bills/' . $id;
         } elseif ($this->action == 'CREATE') {
-            $this->url.='bills/';
+            $this->url .= 'bills/';
         } else { //COLLECTIONS
-            $this->url.='collections/';
+            $this->url .= 'collections/';
         }
         return $this;
     }
