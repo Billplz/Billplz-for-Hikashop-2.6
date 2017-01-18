@@ -138,7 +138,7 @@ class plgHikashoppaymentBillplz extends hikashopPaymentPlugin {
         $element->payment_description = 'Pay using <strong>Maybank2u, CIMB Clicks, Bank Islam, RHB, Hong Leong Bank, Bank Muamalat, Public Bank, Alliance Bank, Affin Bank, AmBank, Bank Rakyat, UOB, Standard Chartered</strong>';
         $element->payment_images = '';
         $element->payment_params->billplzdeliver = false;
-        $element->payment_params->notification = "Callback";
+        $element->payment_params->billplznotification = "Callback";
         $element->payment_params->mode = "Production";
         $element->payment_params->currency = $this->accepted_currencies[0];
         $element->payment_params->notification = true;
