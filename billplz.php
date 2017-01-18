@@ -165,8 +165,7 @@ class plgHikashoppaymentBillplz extends hikashopPaymentPlugin {
         }
         include_once 'billplzapi.php';
 
-        //$order_id = (int) @$vars['orderid'];
-        $order_id = filter_var($_GET['orderid'], FILTER_SANITIZE_STRING);
+        $order_id = (int) @$vars['orderid'];
         $dbOrder = $this->getOrder($order_id);
         $this->loadPaymentParams($dbOrder);
         $this->loadOrderData($dbOrder);
