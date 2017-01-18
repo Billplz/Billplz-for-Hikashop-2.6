@@ -10,7 +10,7 @@ Integrate Billplz in Hikashop 2.6
 
 # Installation Instruction
 
-  * Download this repository: https://codeload.github.com/wzul/Billplz-for-Hikashop/zip/master
+  * Download this repository: https://codeload.github.com/wzul/Billplz-for-Hikashop-2.6/zip/master
   * Go to Joomla Administration >> Extension >> Manage >> Install
   * Upload package file >> Install
   * Enable the plugin >> Extension >> Plugin >> Hikashop Billplz Payment Plugin
