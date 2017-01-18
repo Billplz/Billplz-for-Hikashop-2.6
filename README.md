@@ -1,4 +1,4 @@
-# Billplz for Hikashop
+# Billplz for Hikashop 2.6
 Integrate Billplz in Hikashop 2.6
 
 # Requirement
