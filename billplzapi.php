@@ -227,6 +227,8 @@ class curlaction {
         $process = curl_init();
         curl_setopt($process, CURLOPT_URL, $this->url);
         curl_setopt($process, CURLOPT_HEADER, 0);
+        curl_setopt($process, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($process, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($process, CURLOPT_USERPWD, $this->api_key . ":");
         if ($this->action == 'DELETE') {
             curl_setopt($process, CURLOPT_CUSTOMREQUEST, "DELETE");
